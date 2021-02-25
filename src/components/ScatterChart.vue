@@ -9,46 +9,32 @@
     data: () => ({
       options: {
         scales: {
+          xAxes: [
+            {
+              type: "time",
+            },
+          ],
           yAxes: [
             {
               ticks: {
-                beginAtZero: true,
+                min: 0,
                 max: 100,
-                min: 0,
                 stepSize: 20,
-                callback: (value) => {
-                  return value.toString() + "%";
-                },
               },
             },
           ],
-          xAxes: [
-            {
-              ticks: {
-                max: 1000,
-                min: 0,
-              },
-            },
-          ],
-        },
-        elements: {
-          line: {
-            fill: false,
-          },
-        },
-        legend: {
-          display: false,
         },
         responsive: true,
         maintainAspectRatio: false,
-        animation: {
-          duration: 1500,
-        },
       },
     }),
-
     mounted() {
-      this.renderChart(this.chartdata, this.options);
+      this.renderChart(this.chartData, this.options);
+    },
+    watch: {
+      chartData: function () {
+        this.renderChart(this.chartData, this.options);
+      },
     },
   };
 </script>

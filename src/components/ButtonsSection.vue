@@ -1,34 +1,30 @@
 <template>
-  <div id="cements">
+  <div class="buttons-container">
     <button
       class="button"
-      @click="getCementData(cement.id)"
-      :key="cement.id"
-      v-for="cement in cements"
+      @click="clicked(data)"
+      :key="data.id"
+      v-for="data in buttons"
     >
-      {{ cement.id }}
+      {{ data.id }}
     </button>
   </div>
 </template>
 
 <script>
-  import api from "@/utils/api";
-
   export default {
-    name: "cements-section",
-    props: ["cements"],
+    name: "buttons-section",
+    props: ["buttons"],
     methods: {
-      getCementData(cementId) {
-        api.get(cementId).then((response) => {
-          console.log("hehe", response.data);
-        });
+      clicked(value) {
+        this.$emit("clicked", value);
       },
     },
   };
 </script>
 
 <style scoped>
-  #cements {
+  .buttons-container {
     text-align: center;
     margin-bottom: 0.7rem;
   }

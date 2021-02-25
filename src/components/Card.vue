@@ -16,6 +16,7 @@
   .card {
     display: flex;
     flex-direction: column;
+    margin: auto;
     min-height: 45%;
     min-width: 30%;
     background-color: #fff;
@@ -28,9 +29,5 @@
 
   .card:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-  }
-
-  .title {
-    align-self: center;
   }
 </style>
