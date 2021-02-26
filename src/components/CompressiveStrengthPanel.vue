@@ -1,18 +1,19 @@
 <template>
-  <card :title="'Cements'">
-    <buttons-section
-      v-if="!loading && showButtons"
-      :buttons="cements"
-      @clicked="handleClick"
-    ></buttons-section>
+  <div class="compressive-strength-container">
+    <card :title="'Cements'">
+      <buttons-section
+        v-if="!loading && showButtons"
+        :buttons="cements"
+        @clicked="handleClick"
+      ></buttons-section>
 
-    <loader v-if="loading" />
-
-    <div v-if="!loading && showChart" class="chart-container">
-      <p class="label">Compressive Strength</p>
-      <scatter-chart :chart-data="dataCollection"></scatter-chart>
-    </div>
-  </card>
+      <loader v-if="loading" />
+      <div v-if="!loading && showChart" class="chart-container">
+        <p class="label">Compressive Strength</p>
+        <scatter-chart :chart-data="chartData"></scatter-chart>
+      </div>
+    </card>
+  </div>
 </template>
 
 <script>
@@ -27,7 +28,8 @@
     components: { ButtonsSection, Card, ScatterChart, Loader },
     data() {
       return {
-        dataCollection: null,
+        chartData: null,
+        tableData: null,
         cements: [],
         loading: true,
         showChart: false,
@@ -45,44 +47,9 @@
       },
       getCementData(cementId) {
         api.get(cementId).then((response) => {
-          let compStr2d = [],
-            compStr7d = [],
-            compStr28d = [];
-          response.data.map((v) => {
-            if (v["comp. str. 2d"]) {
-              compStr2d.push({ x: v["recorded-at"], y: v["comp. str. 2d"] });
-            }
-            if (v["comp. str. 7d"]) {
-              compStr7d.push({ x: v["recorded-at"], y: v["comp. str. 7d"] });
-            }
-            if (v["comp. str. 28d"]) {
-              compStr28d.push({ x: v["recorded-at"], y: v["comp. str. 28d"] });
-            }
-          });
-
-          this.dataCollection = {
-            datasets: [
-              {
-                label: "2 days",
-                data: compStr2d,
-                borderColor: "rgba(193, 57, 57, 0.8)",
-                backgroundColor: ["rgba(193, 57, 57, 0.8)"],
-              },
-              {
-                label: "7 days",
-                data: compStr7d,
-                borderColor: "rgba(47, 152, 208, 0.8)",
-                backgroundColor: ["rgba(47, 152, 208, 0.8)"],
-              },
-              {
-                label: "28 days",
-                data: compStr28d,
-                borderColor: "rgba(28, 103, 38, 0.8)",
-                backgroundColor: ["rgba(28, 103, 38, 0.8)"],
-              },
-            ],
-          };
+          this.setChartData(response.data);
           this.loading = false;
+          this.$emit("cementData", response.data);
         });
       },
       getAllCements() {
@@ -92,18 +59,53 @@
           this.loading = false;
         });
       },
+      setChartData(chartData) {
+        let compStr2d = [],
+          compStr7d = [],
+          compStr28d = [];
+        chartData.map((v) => {
+          if (v["comp. str. 2d"]) {
+            compStr2d.push({ x: v["recorded-at"], y: v["comp. str. 2d"] });
+          }
+          if (v["comp. str. 7d"]) {
+            compStr7d.push({ x: v["recorded-at"], y: v["comp. str. 7d"] });
+          }
+          if (v["comp. str. 28d"]) {
+            compStr28d.push({ x: v["recorded-at"], y: v["comp. str. 28d"] });
+          }
+        });
+
+        this.chartData = {
+          datasets: [
+            {
+              label: "2 days",
+              data: compStr2d,
+              borderColor: "rgba(193, 57, 57, 0.8)",
+              backgroundColor: ["rgba(193, 57, 57, 0.8)"],
+            },
+            {
+              label: "7 days",
+              data: compStr7d,
+              borderColor: "rgba(47, 152, 208, 0.8)",
+              backgroundColor: ["rgba(47, 152, 208, 0.8)"],
+            },
+            {
+              label: "28 days",
+              data: compStr28d,
+              borderColor: "rgba(28, 103, 38, 0.8)",
+              backgroundColor: ["rgba(28, 103, 38, 0.8)"],
+            },
+          ],
+        };
+      },
     },
   };
 </script>
 
 <style scoped>
-  .card {
-    width: 70%;
-  }
-
   p.label {
     text-align: center;
-    color: #9e9e9e;
-    margin: 0;
+    color: #6d6767;
+    margin: 2rem 0 0;
   }
 </style>

@@ -12,13 +12,12 @@
   };
 </script>
 
-<style scoped>
+<style>
   .card {
     display: flex;
     flex-direction: column;
     margin: auto;
-    min-height: 45%;
-    min-width: 30%;
+    width: 85%;
     background-color: #fff;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     border-radius: 5px;

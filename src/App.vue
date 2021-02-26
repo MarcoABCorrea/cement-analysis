@@ -3,16 +3,16 @@
     <div class="navbar">
       <h2>Cement Analysis</h2>
     </div>
-    <home />
+    <data-analysis />
   </div>
 </template>
 
 <script>
-  import Home from "@/views/Home.vue";
+  import DataAnalysis from "@/views/DataAnalysis.vue";
 
   export default {
     components: {
-      Home,
+      DataAnalysis,
     },
   };
 </script>
@@ -42,8 +42,8 @@
     margin-left: 1rem;
   }
 
-  .home {
+  .data-analysis {
     margin-top: 6rem;
-    padding: 0 2rem;
+    padding: 0 2rem 4rem;
   }
 </style>
