@@ -8,6 +8,7 @@
       ></buttons-section>
 
       <loader v-if="loading" />
+
       <div v-if="!loading && showChart" class="chart-container">
         <p class="label">Compressive Strength</p>
         <scatter-chart :chart-data="chartData"></scatter-chart>

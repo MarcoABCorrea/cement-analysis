@@ -22,3 +22,7 @@ npm run build
 # run tests
 npm test
 ```
+
+### TOOD
+- Improve tests
+- Color picker for chart
