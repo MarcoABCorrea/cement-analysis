@@ -1,6 +1,6 @@
 <template>
   <div class="table-container">
-    <table>
+    <table border="0" cellspacing="0" cellpadding="0">
       <tr>
         <th>d'</th>
         <th>S03</th>
@@ -10,7 +10,11 @@
         <th>TiO2</th>
       </tr>
 
-      <tr :key="cement['sample-id']" v-for="cement in paginatedData">
+      <tr
+        :class="{ highlight: index < 4 && currentPage === 1 }"
+        :key="cement['sample-id']"
+        v-for="(cement, index) in paginatedData"
+      >
         <td>{{ cement["d'"] }}</td>
         <td>{{ cement.SO3 }}</td>
         <td>{{ cement["Cl-"] }}</td>
@@ -71,7 +75,29 @@
     width: 100%;
   }
 
-  th {
-    text-align: left;
+  td {
+    text-align: center;
+  }
+
+  tr:nth-child(1) {
+    height: 2rem;
+    background-color: #333;
+    color: #fff;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f1f1f1;
+  }
+
+  tr.highlight {
+    background-color: #fdc314;
+  }
+
+  .pagination-controls {
+    margin-top: 1rem;
+  }
+
+  .pagination-controls p {
+    margin: 0.4rem 0;
   }
 </style>

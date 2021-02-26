@@ -16,6 +16,3 @@
     components: { Card, CementTable },
   };
 </script>
-
-<style scoped>
-</style>
